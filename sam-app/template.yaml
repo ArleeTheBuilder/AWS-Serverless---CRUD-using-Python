@@ -47,21 +47,21 @@ Resources:
         - DynamoDBCrudPolicy:
             TableName: !Ref ItemsTable
 
-    UpdateItemFunction:
-      Type: AWS::Serverless::Function
-      Properties:
-        CodeUri: src/update_items/
-        Handler: app.lambda_handler
-        Runtime: python3.9
-        Events: 
-          CreateItem:
-            Type: Api
-            Properties:
-              Path: /items/{id}
-              Method: put
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: !Ref ItemsTable
+  UpdateItemFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/update_items/
+      Handler: app.lambda_handler
+      Runtime: python3.9
+      Events: 
+        CreateItem:
+          Type: Api
+          Properties:
+            Path: /items/{id}
+            Method: put
+    Policies:
+      - DynamoDBCrudPolicy:
+          TableName: !Ref ItemsTable
 
 
   ItemsTable:
