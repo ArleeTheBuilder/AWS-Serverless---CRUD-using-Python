@@ -59,9 +59,9 @@ Resources:
           Properties:
             Path: /items/{id}
             Method: put
-    Policies:
-      - DynamoDBCrudPolicy:
-          TableName: !Ref ItemsTable
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref ItemsTable
 
 
   ItemsTable:
@@ -77,6 +77,22 @@ Resources:
       ProvisionedThroughput:
         ReadCapacityUnits: "1"
         WriteCapacityUnits: "1"
+
+  DeleteItemsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/delete_items/
+      Handler: app.lambda_handler
+      Runtime: python3.9
+      Events: 
+        DeleteItems:
+          Type: Api
+          Properties:
+            Path: /items/{id}
+            Method: delete
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref ItemsTable
 
 Outputs:
   ItemApi:

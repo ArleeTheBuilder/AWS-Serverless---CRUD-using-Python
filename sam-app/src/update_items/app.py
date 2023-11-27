@@ -34,6 +34,7 @@ def lambda_handler(message, context):
 
     response = table.update_item(
         Key=params,
+        UpdateExpression="set itemName = :s, description = :s, price = :n, isActive = :s",
         ExpressionAttributeValues={
             ":s": activity["itemName"],
             ":s": activity["description"],
@@ -45,5 +46,5 @@ def lambda_handler(message, context):
     return {
         'statusCode': 200,
         'headers': {},
-        'body': json.dumps(response['Items'])
+        'body': json.dumps({'msg': 'Item Updated'})
     }
